@@ -1,5 +1,7 @@
 package com.pluralsight.repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
@@ -49,18 +52,25 @@ public class RideRepositoryImpl implements RideRepository {
 		// Get the id of created item
 		insert.setGeneratedKeyName("id");
 		Number key = insert.executeAndReturnKey(data);
-		System.out.println(key);
 
 		return null;
 	}
 	
 	@Override
 	public List<Ride> getRides() {
-		Ride ride = new Ride();
-		ride.setName("Corner Canyon");
-		ride.setDuration(120);
-		List <Ride> rides = new ArrayList<>();
-		rides.add(ride);
+		List<Ride> rides = jdbcTemplate.query(
+			"select * from ride",
+			new RowMapper<Ride>() {
+				@Override
+				public Ride mapRow(ResultSet rs, int rowNum) throws SQLException {
+					Ride ride = new Ride();
+					ride.setId(rs.getInt("id"));
+					ride.setName(rs.getString("name"));
+					ride.setDuration(rs.getInt("duration"));
+					return ride;
+				}
+		});
+		
 		return rides;
 	}
 	

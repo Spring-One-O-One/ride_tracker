@@ -27,11 +27,15 @@ public class RestControllerTest {
 	@Test(timeout=3000)
 	public void testGetRides() {
 		RestTemplate restTemplate = new RestTemplate();
+		String getRidesUri = "http://localhost:8080/ride_tracker/rides";
 
 		ResponseEntity<List<Ride>> ridesResponse = restTemplate.exchange(
-				"http://localhost:8080/ride_tracker/rides", HttpMethod.GET,
-				null, new ParameterizedTypeReference<List<Ride>>() {
-				});
+			getRidesUri,
+			HttpMethod.GET,
+			null,
+			new ParameterizedTypeReference<List<Ride>>() {}
+		);
+
 		List<Ride> rides = ridesResponse.getBody();
 
 		for (Ride ride : rides) {
