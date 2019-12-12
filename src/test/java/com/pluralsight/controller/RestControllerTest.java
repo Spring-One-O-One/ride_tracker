@@ -18,7 +18,7 @@ public class RestControllerTest {
 		RestTemplate restTemplate = new RestTemplate();
 		
 		Ride ride = new Ride();
-		ride.setName("Round Valley Ride");
+		ride.setName("Yellow Fork Trail");
 		ride.setDuration(38);
 
 		restTemplate.postForObject(
@@ -26,6 +26,8 @@ public class RestControllerTest {
 			 ride,
 			 Ride.class
 		 );
+		
+		System.out.println("Ride: " + ride);
 	}
 	
 	@Test(timeout=3000)
