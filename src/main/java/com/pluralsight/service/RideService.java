@@ -8,6 +8,10 @@ public interface RideService {
 
 	Ride createRide(Ride ride);
 	
+	Ride getRide(Integer id);
+	
 	List<Ride> getRides();
+
+	Ride updateRide(Ride ride);
 
 }

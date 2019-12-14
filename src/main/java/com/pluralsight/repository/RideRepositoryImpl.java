@@ -51,6 +51,7 @@ public class RideRepositoryImpl implements RideRepository {
 		return getRide(id.intValue());
 	}
 
+	@Override
 	public Ride getRide(Integer id) {
 		Ride ride = jdbcTemplate.queryForObject(
 			"SELECT * FROM ride WHERE id = ?",
@@ -96,6 +97,20 @@ public class RideRepositoryImpl implements RideRepository {
 		);
 
 		return rides;
+	}
+	
+	@Override
+	public Ride updateRide(Ride ride) {
+		String SQL = "UPDATE ride SET name = ?, duration = ? WHERE id = ?";
+
+		jdbcTemplate.update(
+				SQL,
+				ride.getName(),
+				ride.getDuration(),
+				ride.getId()
+		);
+
+		return ride;
 	}
 	
 }
