@@ -113,4 +113,13 @@ public class RideRepositoryImpl implements RideRepository {
 		return ride;
 	}
 	
+	// JdbcTemplate.batchUpdate for updating/inserting multiple items in DB
+	@Override
+	public void updateRides(List<Object[]> pairs) {
+		// "pairs" Order matters [Date, Id] due to SQL String:
+		String SQL = "UPDATE ride SET ride_date = ? WHERE id = ?";
+
+		jdbcTemplate.batchUpdate(SQL, pairs);
+	}
+	
 }

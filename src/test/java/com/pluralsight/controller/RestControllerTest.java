@@ -76,4 +76,12 @@ public class RestControllerTest {
 		
 		System.out.println("Ride name: " + ride.getName());
 	}
+
+	@Test(timeout=3000)
+	public void testBatchUpdate() {
+		RestTemplate restTemplate = new RestTemplate();
+		String url = "http://localhost:8080/ride_tracker";
+
+		restTemplate.getForObject(url + "/batch", Object.class);
+	}
 }
