@@ -84,4 +84,12 @@ public class RestControllerTest {
 
 		restTemplate.getForObject(url + "/batch", Object.class);
 	}
+
+	@Test(timeout=3000)
+	public void testDelete() {
+		RestTemplate restTemplate = new RestTemplate();
+		String url = "http://localhost:8080/ride_tracker";
+
+		restTemplate.delete(url + "/delete/19");
+	}
 }
