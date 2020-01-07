@@ -5,7 +5,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pluralsight.model.Ride;
 import com.pluralsight.repository.RideRepository;
@@ -30,8 +32,9 @@ public class RideServiceImpl implements RideService {
 	public List<Ride> getRides() {
 		return rideRepository.getRides();
 	}
-	
+
 	@Override
+	@Transactional // to roll back transactions if exception is thrown
 	public void batch() {
 		// Get rides from DB
 		List<Ride> rides = rideRepository.getRides();
@@ -45,6 +48,10 @@ public class RideServiceImpl implements RideService {
 		}
 
 		rideRepository.updateRides(pairs);
+		
+		// Simulate something went wrong in db and we want to roll back our db changes
+		throw new DataAccessException("Testing exception handling") {
+		};
 	}
 	
 	@Override
